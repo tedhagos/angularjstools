@@ -26,12 +26,12 @@
     console.log("Ready to go");
     return gulp.src('js/**/*.js')
     .pipe(ngAnnotate())
-    .pipe(!prod ? sourcemaps.init() : util.noop())
+    .pipe(prod ? sourcemaps.init() : util.noop())
     .pipe(concat('bundle.js'))
-    .pipe(!prod ? uglify() : util.noop())
-    .pipe(!prod ? obfuscate() : util.noop())
-    .pipe(!prod ? sourcemaps.write() : util.noop())
-    .pipe(gulp.dest('bin/js'));
+    .pipe(prod ? uglify() : util.noop())
+    .pipe(prod ? obfuscate() : util.noop())
+    .pipe(prod ? sourcemaps.write() : util.noop())
+    .pipe(gulp.dest('dist/js'));
   });
   
   gulp.task('t1', function(){
@@ -41,7 +41,7 @@
   gulp.task('clean', function(){
     console.log('cleaning build');
     return del([
-      'bin/**/*'
+      'dist/**/*'
     ]);
   });
 })();
